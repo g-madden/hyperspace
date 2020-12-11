@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { pineapple } from './pineapple';
 import { pepperoni } from './pepperoni';
 
+const loader = new THREE.TextureLoader();
 const moreToppings = (topping: THREE.Mesh, rotate: boolean) => {
   const group = new THREE.Group();
   const max = 1.4;
@@ -14,7 +15,7 @@ const moreToppings = (topping: THREE.Mesh, rotate: boolean) => {
     }
     clone.position.set(
       (i / 30) * (max - min) + min,
-      0.1,
+      Math.random() + 0.1,
       Math.random() * (max - min) + min,
     );
 
@@ -24,11 +25,17 @@ const moreToppings = (topping: THREE.Mesh, rotate: boolean) => {
 };
 
 const doughGeometry = new THREE.CylinderGeometry(2, 2, 0.1, 32);
-const doughMaterial = new THREE.MeshLambertMaterial({ color: 0xf2d177 });
+// const doughMaterial = new THREE.MeshLambertMaterial({ color: 0xf2d177 });
+const doughMaterial = new THREE.MeshBasicMaterial({
+  map: loader.load('./pizza-crust.png'),
+});
 const dough = new THREE.Mesh(doughGeometry, doughMaterial);
 
 const sauceGeometry = new THREE.CylinderGeometry(1.8, 1.8, 0.03, 32);
-const sauceMaterial = new THREE.MeshLambertMaterial({ color: 0xeb2300 });
+// const sauceMaterial = new THREE.MeshLambertMaterial({ color: 0xeb2300 });
+const sauceMaterial = new THREE.MeshBasicMaterial({
+  map: loader.load('./cheesy-sauce.png'),
+});
 const sauce = new THREE.Mesh(sauceGeometry, sauceMaterial);
 sauce.position.set(0, 0.05, 0);
 
