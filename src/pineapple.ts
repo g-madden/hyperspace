@@ -17,4 +17,7 @@ pineappleGeometry.center();
 const pineappleMaterial = new THREE.MeshLambertMaterial({
   color: 0xf5e042,
 });
-export const pineapple = new THREE.Mesh(pineappleGeometry, pineappleMaterial);
+
+const pineapple = new THREE.Mesh(pineappleGeometry, pineappleMaterial);
+
+export { pineapple };
