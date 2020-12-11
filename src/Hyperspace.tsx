@@ -1,5 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+
+import { pineapple } from './pineapple';
 
 export const Hyperspace = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -19,14 +22,20 @@ export const Hyperspace = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     el.appendChild(renderer.domElement);
 
-    // lights!
-    const color = 0xffffff;
-    const intensity = 1;
-    const light = new THREE.DirectionalLight(color, intensity);
-    light.position.set(-1, 2, 4);
-    scene.add(light);
+    // This allows mouse drag to rotate camera
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.update();
 
-    camera.position.z = 5;
+    camera.position.z = 3;
+
+    // lights!
+    const color = 0xfffff2;
+    const intensity = 0.7;
+    const light = new THREE.DirectionalLight(color, intensity);
+    light.position.set(-4, 1, 20);
+    scene.add(light);
+    const ambientLight = new THREE.AmbientLight(0x404040); // soft white light
+    scene.add(ambientLight);
 
     const doughGeometry = new THREE.CylinderGeometry(2, 2, 0.1, 32);
     const doughMaterial = new THREE.MeshLambertMaterial({ color: 0xf2d177 });
@@ -37,9 +46,13 @@ export const Hyperspace = () => {
     const sauce = new THREE.Mesh(sauceGeometry, sauceMaterial);
     sauce.position.set(0, 0.05, 0);
 
+    pineapple.rotation.set(2, 0, 1.1);
+    pineapple.position.set(0, 0.1, 0);
+
     const pizzaGroup = new THREE.Group();
     pizzaGroup.add(dough);
     pizzaGroup.add(sauce);
+    pizzaGroup.add(pineapple);
 
     scene.add(pizzaGroup);
 
