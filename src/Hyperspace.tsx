@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import * as THREE from "three";
+import * as THREE from 'three';
 
 export const Hyperspace = () => {
-    const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const scene = new THREE.Scene();
@@ -10,7 +10,7 @@ export const Hyperspace = () => {
       75,
       window.innerWidth / window.innerHeight,
       0.1,
-      1000
+      1000,
     );
 
     const el = ref.current as HTMLDivElement;
@@ -19,25 +19,40 @@ export const Hyperspace = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     el.appendChild(renderer.domElement);
 
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+    // lights!
+    const color = 0xffffff;
+    const intensity = 1;
+    const light = new THREE.DirectionalLight(color, intensity);
+    light.position.set(-1, 2, 4);
+    scene.add(light);
 
     camera.position.z = 5;
 
-    const animate = function() {
+    const doughGeometry = new THREE.CylinderGeometry(2, 2, 0.1, 32);
+    const doughMaterial = new THREE.MeshLambertMaterial({ color: 0xf2d177 });
+    const dough = new THREE.Mesh(doughGeometry, doughMaterial);
+
+    const sauceGeometry = new THREE.CylinderGeometry(1.8, 1.8, 0.03, 32);
+    const sauceMaterial = new THREE.MeshLambertMaterial({ color: 0xeb2300 });
+    const sauce = new THREE.Mesh(sauceGeometry, sauceMaterial);
+    sauce.position.set(0, 0.05, 0);
+
+    const pizzaGroup = new THREE.Group();
+    pizzaGroup.add(dough);
+    pizzaGroup.add(sauce);
+
+    scene.add(pizzaGroup);
+
+    const animate = function () {
       requestAnimationFrame(animate);
 
-      cube.rotation.x += 0.01;
-      cube.rotation.y += 0.01;
+      pizzaGroup.rotation.x += 0.01;
+      pizzaGroup.rotation.y += 0.01;
 
       renderer.render(scene, camera);
     };
 
     animate();
-  })
-  return (
-    <div ref={ref} />
-  )
-}
+  });
+  return <div ref={ref} />;
+};
