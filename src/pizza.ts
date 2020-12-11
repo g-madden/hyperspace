@@ -27,14 +27,18 @@ const moreToppings = (topping: THREE.Mesh, rotate: boolean) => {
 const doughGeometry = new THREE.CylinderGeometry(2, 2, 0.1, 32);
 // const doughMaterial = new THREE.MeshLambertMaterial({ color: 0xf2d177 });
 const doughMaterial = new THREE.MeshBasicMaterial({
-  map: loader.load('./pizza-crust.png'),
+  map: loader.load(
+    'https://i1.wp.com/www.brewinghappiness.com/wp-content/uploads/2019/02/L1.jpg?resize=500%2C750&ssl=1',
+  ),
 });
 const dough = new THREE.Mesh(doughGeometry, doughMaterial);
 
 const sauceGeometry = new THREE.CylinderGeometry(1.8, 1.8, 0.03, 32);
 // const sauceMaterial = new THREE.MeshLambertMaterial({ color: 0xeb2300 });
 const sauceMaterial = new THREE.MeshBasicMaterial({
-  map: loader.load('./cheesy-sauce.png'),
+  map: loader.load(
+    'https://thumbs.dreamstime.com/t/pizza-texture-17863994.jpg',
+  ),
 });
 const sauce = new THREE.Mesh(sauceGeometry, sauceMaterial);
 sauce.position.set(0, 0.05, 0);
