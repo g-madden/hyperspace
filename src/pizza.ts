@@ -1,14 +1,17 @@
 import * as THREE from 'three';
 import { pineapple } from './pineapple';
+import { pepperoni } from './pepperoni';
 
-const moreToppings = (topping: THREE.Mesh) => {
+const moreToppings = (topping: THREE.Mesh, rotate: boolean) => {
   const group = new THREE.Group();
   const max = 1.4;
   const min = -1.4;
   let i = 0;
   for (i; i < 30; i++) {
     const clone = topping.clone();
-    clone.rotation.set(2, 0, i * Math.random());
+    if (rotate) {
+      clone.rotation.set(2, 0, i * Math.random());
+    }
     clone.position.set(
       (i / 30) * (max - min) + min,
       0.1,
@@ -29,11 +32,13 @@ const sauceMaterial = new THREE.MeshLambertMaterial({ color: 0xeb2300 });
 const sauce = new THREE.Mesh(sauceGeometry, sauceMaterial);
 sauce.position.set(0, 0.05, 0);
 
-const pineappleGroup = moreToppings(pineapple);
+const pineappleGroup = moreToppings(pineapple, true);
+const peps = moreToppings(pepperoni, false);
 
 const pizzaGroup = new THREE.Group();
 pizzaGroup.add(dough);
 pizzaGroup.add(sauce);
 pizzaGroup.add(pineappleGroup);
+pizzaGroup.add(peps);
 
 export { pizzaGroup };
