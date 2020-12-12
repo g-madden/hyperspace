@@ -19,7 +19,9 @@ pineappleGeometry.center();
 //   color: 0xf5e042,
 // });
 const pineappleMaterial = new THREE.MeshBasicMaterial({
-  map: loader.load('./pa.png'),
+  map: loader.load(
+    'https://thumbs.dreamstime.com/b/texture-inside-pineapple-looks-just-like-lava-flowing-down-volcano-29789674.jpg',
+  ),
 });
 const pineapple = new THREE.Mesh(pineappleGeometry, pineappleMaterial);
 
